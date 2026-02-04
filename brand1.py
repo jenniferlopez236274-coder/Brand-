@@ -3,27 +3,21 @@ import sys
 import time
 import hashlib
 import socket
+import requests  # Internet se list check karne ke liye
 from datetime import datetime
 
 # ==========================================================
-# [ ADMIN CONTROL PANEL ] - ONLY FOR FOZI KING HACKER
+# [ ADMIN CONTROL PANEL ]
 # ==========================================================
 OWNER_NAME = "FOZI KING HACKER"
 CONTACT_NO = "+923186757671"
 
-# Jo ID mobile screen par nazar aaye, usse yahan add karein
-APPROVED_DEVICES = [
-    "FOZI-MASTER-786", 
-    "FOZI-5C97A0A39D"  # Agar ye match nahi ho rahi, toh screen wali ID yahan dalein
-]
+# APNI GITHUB RAW FILE KA LINK YAHAN PASTE KAREIN
+APPROVAL_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/approval.txt"
 # ==========================================================
-
-def clear():
-    os.system('clear' if os.name == 'posix' else 'cls')
 
 def get_hwid():
     try:
-        # Mobile compatibility ke liye simple logic
         raw_info = socket.gethostname() + "FOZI-SECURE-KEY"
         hwid = hashlib.md5(raw_info.encode()).hexdigest()[:10].upper()
         return f"FOZI-{hwid}"
@@ -31,10 +25,35 @@ def get_hwid():
         return "FOZI-ERR-786"
 
 def check_security():
-    clear()
+    os.system('clear' if os.name == 'posix' else 'cls')
     user_hwid = get_hwid()
     
-    print("\033[1;32m" + "╔══════════════════════════════════════════════════════════╗")
+    print("\033[1;32m [●] Checking Admin Approval... Please wait.")
+    
+    try:
+        # GitHub se list fetch karna
+        response = requests.get(APPROVAL_URL)
+        approved_list = response.text.splitlines() # Har line ko alag ID banata hai
+        
+        if user_hwid in approved_list:
+            print(f"\033[1;32m [✔] DEVICE {user_hwid} IS APPROVED!")
+            time.sleep(2)
+            return True
+        else:
+            print(f"\n\033[1;91m [!] ACCESS DENIED: NOT APPROVED BY {OWNER_NAME}")
+            print(f"\033[1;97m [●] YOUR ID : \033[1;36m{user_hwid}")
+            print(f"\n\033[1;33m [#] SEND THIS ID TO : \033[1;97m{CONTACT_NO}")
+            sys.exit()
+            
+    except Exception as e:
+        print("\033[1;31m [!] ERROR: No Internet or Invalid Approval Link.")
+        sys.exit()
+
+# Prediction logic niche same rahega...
+if __name__ == "__main__":
+    if check_security():
+        # start_tool() function yahan call karein
+        pass    print("\033[1;32m" + "╔══════════════════════════════════════════════════════════╗")
     print(f"║        👑 \033[1;33m{OWNER_NAME}\033[1;32m 👑         ║")
     print(f"║          [ GITHUB PREMIUM - WORKING 100% ]               ║")
     print("╚══════════════════════════════════════════════════════════╝" + "\033[0m")
