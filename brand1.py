@@ -14,7 +14,7 @@ CONTACT_NO = "+923186757671"
 # GitHub par upload karne se pehle naye customers ki ID yahan add karein
 APPROVED_DEVICES = [
     "FOZI-MASTER-786", 
-    "FOZI-43629758D0" 
+    "FOZI-5C97A0A39D" 
 ]
 # ==========================================================
 
