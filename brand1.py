@@ -24,27 +24,33 @@ def get_hwid():
     except:
         return "FOZI-ERR-786"
 
+import requests # Ye line sab se upar honi chahiye
+
 def check_security():
-    os.system('clear' if os.name == 'posix' else 'cls')
+    clear()
     user_hwid = get_hwid()
     
-    print("\033[1;32m [●] Checking Admin Approval... Please wait.")
+    # Yahan apna copy kiya hua RAW link dalein
+    url = "https://raw.githubusercontent.com/jenniferlopez236274-coder/Aprowl.txt/main/Aprowl.txt"
     
     try:
-        # GitHub se list fetch karna
-        response = requests.get(APPROVAL_URL)
-        approved_list = response.text.splitlines() # Har line ko alag ID banata hai
+        # GitHub se IDs download karna
+        response = requests.get(url)
+        approved_ids = response.text.splitlines()
         
-        if user_hwid in approved_list:
-            print(f"\033[1;32m [✔] DEVICE {user_hwid} IS APPROVED!")
-            time.sleep(2)
+        # ID check karna (strip() taake extra space ka masla na ho)
+        if any(user_hwid.strip() == id.strip() for id in approved_ids):
+            print(f"\n\033[1;32m [✔] DEVICE {user_hwid} REGISTERED!")
             return True
         else:
-            print(f"\n\033[1;91m [!] ACCESS DENIED: NOT APPROVED BY {OWNER_NAME}")
-            print(f"\033[1;97m [●] YOUR ID : \033[1;36m{user_hwid}")
-            print(f"\n\033[1;33m [#] SEND THIS ID TO : \033[1;97m{CONTACT_NO}")
+            # Agar ID nahi mili toh ye dikhaye
+            print(f"\n\033[1;91m [!] ACCESS DENIED: YOUR KEY IS NOT APPROVED")
+            print(f"\033[1;97m [●] YOUR UNIQUE DEVICE ID : \033[1;36m{user_hwid}")
+            # ... baqi ka contact info ...
             sys.exit()
-            
+    except:
+        print(" [!] Connection Error! Check your internet.")
+        sys.exit()
     except Exception as e:
         print("\033[1;31m [!] ERROR: No Internet or Invalid Approval Link.")
         sys.exit()
