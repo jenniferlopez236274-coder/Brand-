@@ -31,7 +31,7 @@ def check_security():
     user_hwid = get_hwid()
     
     # Yahan apna copy kiya hua RAW link dalein
-    url = "https://raw.githubusercontent.com/jenniferlopez236274-coder/Aprowl.txt/main/Aprowl.txt"
+    url = "https://github.com/jenniferlopez236274-coder/Aprowl.txt/blob/fee9ae720e532bff418a9fbdf37310dfca0ae621/Aprowl.txt"
     
     try:
         # GitHub se IDs download karna
