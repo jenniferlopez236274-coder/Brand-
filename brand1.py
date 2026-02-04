@@ -11,10 +11,10 @@ from datetime import datetime
 OWNER_NAME = "FOZI KING HACKER"
 CONTACT_NO = "+923186757671"
 
-# GitHub par upload karne se pehle naye customers ki ID yahan add karein
+# Jo ID mobile screen par nazar aaye, usse yahan add karein
 APPROVED_DEVICES = [
     "FOZI-MASTER-786", 
-    "FOZI-5C97A0A39D" 
+    "FOZI-5C97A0A39D"  # Agar ye match nahi ho rahi, toh screen wali ID yahan dalein
 ]
 # ==========================================================
 
@@ -23,8 +23,8 @@ def clear():
 
 def get_hwid():
     try:
-        # Hardware ID binding logic
-        raw_info = socket.gethostname() + os.getlogin()
+        # Mobile compatibility ke liye simple logic
+        raw_info = socket.gethostname() + "FOZI-SECURE-KEY"
         hwid = hashlib.md5(raw_info.encode()).hexdigest()[:10].upper()
         return f"FOZI-{hwid}"
     except:
@@ -34,7 +34,6 @@ def check_security():
     clear()
     user_hwid = get_hwid()
     
-    # BIG BRANDING HEADER
     print("\033[1;32m" + "╔══════════════════════════════════════════════════════════╗")
     print(f"║        👑 \033[1;33m{OWNER_NAME}\033[1;32m 👑         ║")
     print(f"║          [ GITHUB PREMIUM - WORKING 100% ]               ║")
@@ -42,23 +41,18 @@ def check_security():
     
     if user_hwid not in APPROVED_DEVICES:
         print(f"\n\033[1;91m [!] ACCESS DENIED: YOUR KEY IS NOT APPROVED")
-        print(f"\033[1;97m [●] YOUR UNIQUE DEVICE ID : \033[1;36m{user_hwid}")
+        print(f"\033[1;97m [●] YOUR REAL DEVICE ID : \033[1;36m{user_hwid}") # Ye ID copy karein
         
         print("\n\033[1;32m" + "─"*50)
-        print(f"\033[1;97m [ SUBSCRIPTION PLANS ]")
-        print(f" \033[1;32m▶ 1 MONTH    : 1000 PKR")
-        print(f" \033[1;32m▶ 3 MONTHS   : 3000 PKR")
-        print(f" \033[1;32m▶ LIFE TIME  : 5000 PKR")
-        print("\033[1;32m" + "─"*50)
-        
-        print(f"\n\033[1;33m [#] TO BUY ACCESS, SEND ID TO : \033[1;97m{CONTACT_NO}")
+        print(f"\n\033[1;33m [#] TO BUY ACCESS, SEND THIS ID TO : \033[1;97m{CONTACT_NO}")
         print(f"\033[1;90m [STATUS]: Waiting for Admin Approval...\033[0m")
         sys.exit()
     else:
         print(f"\n\033[1;32m [✔] DEVICE {user_hwid} REGISTERED!")
-        print(f" [●] CONNECTING TO {OWNER_NAME} PRIVATE SERVER...")
         time.sleep(2)
         return True
+
+# ... baqi sara prediction logic niche same rahega ...        return True
 
 def get_k3_logic():
     now = datetime.now()
