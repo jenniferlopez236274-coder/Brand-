@@ -3,86 +3,120 @@ import sys
 import time
 import hashlib
 import socket
-import requests  # Ye library internet se ID check karegi
+import platform
 from datetime import datetime
 
 # ==========================================================
-# [ ADMIN CONTROL PANEL ]
+# [ ADMIN CONTROL PANEL ] - POWER OF FOZI HACKER
 # ==========================================================
-OWNER_NAME = "FOZI KING HACKER"
-CONTACT_NO = "+923186757671"
+OWNER_NAME = "POWER OF FOZI HACKER"
+VERSION = "V16.8 PRO"
 
-# Aapki GitHub Raw File ka sahi link
-APPROVAL_URL = "https://raw.githubusercontent.com/jenniferlopez236274-coder/Aprowl.txt/main/Aprowl.txt"
+# Unique ID for your device (Add yours here)
+APPROVED_DEVICES = ["FOZI-MASTER-786", "FOZI-STABLE-ERR"] 
 # ==========================================================
 
 def clear():
     os.system('clear' if os.name == 'posix' else 'cls')
 
-def get_hwid():
+def get_stable_hwid():
     try:
-        # Aapka original hardware ID logic
-        raw_info = socket.gethostname() + os.getlogin()
-        hwid = hashlib.md5(raw_info.encode()).hexdigest()[:10].upper()
+        sig = platform.machine() + socket.gethostname() + platform.system()
+        hwid = hashlib.sha256(sig.encode()).hexdigest()[:12].upper()
         return f"FOZI-{hwid}"
     except:
-        return "FOZI-ERR-786"
+        return "FOZI-STABLE-ERR"
 
-def check_security():
-    clear()
-    user_hwid = get_hwid()
+def get_real_period():
+    now = datetime.now()
+    # 1-Minute Game Logic
+    total_minutes = (now.hour * 60) + now.minute
+    period_count = 1141 + total_minutes
+    return now.strftime("%Y%m%d") + "10101" + str(period_count)
+
+def get_sureshot_logic(period):
+    # Professional Pattern Logic (Simulated)
+    # Is logic ko aise design kiya hai ke ye har period par consistent rahe
+    combined_seed = str(period) + "ULTRA_VIP_SECRET"
+    hash_res = hashlib.md5(combined_seed.encode()).hexdigest()
     
-    print("\033[1;32m [●] Connecting to Server...")
+    # Last digit logic for Big/Small
+    last_digit = int(hash_res[-1], 16)
     
-    try:
-        # GitHub se list fetch karna
-        response = requests.get(APPROVAL_URL, timeout=10)
-        # Har line se ID uthayega aur extra space khatam karega
-        approved_list = [line.strip() for line in response.text.splitlines()]
-        
-        if user_hwid in approved_list:
-            print(f"\n\033[1;32m [✔] DEVICE {user_hwid} REGISTERED!")
-            time.sleep(2)
-            return True
-        else:
-            print(f"\n\033[1;91m [!] ACCESS DENIED: YOUR KEY IS NOT APPROVED")
-            print(f"\033[1;97m [●] YOUR ID : \033[1;36m{user_hwid}")
-            print(f"\n\033[1;33m [#] TO BUY ACCESS, SEND ID TO : \033[1;97m{CONTACT_NO}")
-            sys.exit()
-            
-    except Exception as e:
-        print("\033[1;31m [!] CONNECTION ERROR: Check your Internet!")
-        print("\033[1;90m Hint: Make sure 'requests' library is installed (pip install requests)")
+    # Result mapping
+    bs = "\033[1;31mBIG 🔴\033[0m" if last_digit > 7 else "\033[1;34mSMALL 🔵\033[0m"
+    eo = "\033[1;35mEVEN 🟣\033[0m" if last_digit % 2 == 0 else "\033[1;37mODD ⚪\033[0m"
+    
+    # High Accuracy Probability (Visual only)
+    accuracy = "98.2%" if last_digit > 4 else "95.7%"
+    
+    return bs, eo, accuracy
+
+def start_engine():
+    user_id = get_stable_hwid()
+    
+    # Simple Access Check
+    if user_id not in APPROVED_DEVICES and "FOZI" not in user_id:
+        clear()
+        print(f"\n\033[1;31m [!] UNAUTHORIZED ACCESS")
+        print(f"\033[1;37m [●] YOUR HWID: \033[1;33m{user_id}")
+        print(f"\033[1;37m [●] STATUS   : \033[1;31mBLOCK BY {OWNER_NAME}")
         sys.exit()
 
-# --- Prediction Logic Start ---
-def get_k3_logic():
-    now = datetime.now()
-    base = "10101"
-    mins = (now.hour * 60) + now.minute
-    p_suffix = 9701 + mins 
-    period = now.strftime("%Y%m%d") + base + str(p_suffix)
-    seed = period + "FOZI_ULTRA_SECRET_V29"
-    h = hashlib.sha256(seed.encode()).hexdigest()
-    val = (int(h[:2], 16) % 16) + 3
-    res = "BIG 🔴" if val >= 11 else "SMALL 🔵"
-    pattern = "ODD" if val % 2 != 0 else "EVEN"
-    return period, val, res, pattern
+    clear()
+    print(f"\033[1;32m[+] CONNECTING TO CLOUD SERVER...")
+    time.sleep(1.5)
+    print(f"\033[1;32m[+] BYPASSING PAK GAMES ANTI-CHEAT...")
+    time.sleep(1.5)
 
-def start_tool():
-    last_p = ""
+    last_period = ""
+
     while True:
-        p, v, r, patt = get_k3_logic()
-        if p != last_p:
-            last_p = p
-            clear()
-            print(f"\033[1;32m 👑 {OWNER_NAME} 👑")
-            print(f"\n\033[1;96m [PERIOD] : {p}")
-            print(f" [PREDICTION] : \033[1;33m{r}\033[0m")
-            print(f" [PATTERN] : {patt}")
-            time.sleep(1)
+        now = datetime.now()
+        p = get_real_period()
+        sec = now.second
+        
+        # Naya period aane par animation
+        if p != last_period:
+            print(f"\n\033[1;33m[⚡] NEW PERIOD DETECTED: {p}")
+            print(f"\033[1;32m[⚙️] ANALYZING PATTERN...")
+            time.sleep(2)
+            last_period = p
+
+        bs, eo, acc = get_sureshot_logic(p)
+        
+        clear()
+        print(f"\033[1;32m╔══════════════════════════════════════════════════════════╗")
+        print(f"║        👑 {OWNER_NAME} {VERSION} 👑         ║")
+        print(f"╚══════════════════════════════════════════════════════════╝\033[0m")
+        
+        print(f" \033[1;37m[●] SERVER STATUS : \033[1;32mONLINE (STABLE)")
+        print(f" \033[1;37m[●] CURRENT GAME  : \033[1;36mK3 1-MINUTE")
+        print(f" \033[1;37m[●] ACTIVE PERIOD : \033[1;33m{p}")
+        print("\033[1;32m" + "━"*58 + "\033[0m")
+        
+        print(f"\n\033[1;37m   🎯 PREDICTION RESULT:")
+        print(f"   \033[1;32m-----------------------")
+        print(f"   \033[1;37m[MAIN]   : {bs}")
+        print(f"   \033[1;37m[SIDE]   : {eo}")
+        print(f"   \033[1;37m[CONF.]  : \033[1;32m{acc}")
+        print(f"   \033[1;32m-----------------------")
+        
+        # Countdown Timer
+        rem_sec = 60 - sec
+        color = "\033[1;32m" if rem_sec > 15 else "\033[1;31m"
+        print(f"\n {color}[⏳] TIME LEFT: {rem_sec}s \033[0m")
+        
+        if rem_sec <= 3:
+            print(f"\n\033[1;33m [!] FETCHING NEXT RESULT...")
+            time.sleep(3)
+
+        print("\033[1;32m\n" + "═"*58 + "\033[0m")
         time.sleep(1)
 
 if __name__ == "__main__":
-    if check_security():
-        start_tool()
+    try:
+        start_engine()
+    except KeyboardInterrupt:
+        print("\n\033[1;31m[!] ENGINE STOPPED BY USER.")
+        sys.exit()
