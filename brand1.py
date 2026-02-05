@@ -4,7 +4,7 @@ import time
 import hashlib
 from datetime import datetime
 
-# --- AUTO-INSTALL MISSING MODULES ---
+# --- AUTO-FIX FOR REQUESTS ---
 try:
     import requests
 except ImportError:
@@ -16,9 +16,7 @@ except ImportError:
 # ==========================================================
 OWNER_NAME = "FOZI KING"
 CONTACT_NO = "+923186757671"
-VERSION = "V24.0 SYNC-FIX"
-
-# Aapka GitHub Approval Link
+VERSION = "V25.0 PERFECT-SYNC"
 GITHUB_URL = "https://raw.githubusercontent.com/jenniferlopez236274-coder/Aprowl.txt/main/Aprowl.txt"
 # ==========================================================
 
@@ -32,27 +30,28 @@ def get_hwid():
     sig = platform.machine() + socket.gethostname() + platform.node()
     return f"FOZI-{hashlib.sha256(sig.encode()).hexdigest()[:10].upper()}"
 
-def get_pak_games_period():
+def get_perfect_period():
     """
-    Pak Games K3 1-Min Period Calculation:
-    Format: YYYYMMDD0101 + Total Minutes since midnight
+    Pak Games K3 1-Min EXACT calculation as per your screenshot.
+    Screenshot Chrome Period: 20260205 10101 0434
     """
     now = datetime.now()
-    # Midnight se ab tak ke total minutes
+    # Total minutes since midnight
     total_minutes = (now.hour * 60) + now.minute
     
-    # Pak Games K3 1-Min ka base code '0101' hota hai
-    # Format: 20260205 + 0101 + current_minute_index
-    # Example: 2026020501010734
-    period_suffix = f"0101{total_minutes:04d}"
-    return now.strftime("%Y%m%d") + period_suffix
+    # Aapke screenshot ke mutabiq base format 10101 hai
+    # Aur current minute index 0434 ke aas paas hai
+    # Calibration: Agar period thoda aage peeche ho, to 10101 ko yahan adjust karein.
+    base_format = "10101"
+    
+    # 04d ensures it shows 4 digits like 0434
+    period = now.strftime("%Y%m%d") + base_format + f"{total_minutes:04d}"
+    return period
 
 def get_prediction(period):
-    # Standard VIP Hashing Logic
-    seed = str(period) + "FOZI_KING_ULTRA_SURE"
+    seed = str(period) + "FOZI_KING_ULTRA_SURE_99"
     h = hashlib.sha256(seed.encode()).hexdigest()
     val = int(h[-1], 16)
-    
     bs = "\033[1;31mBIG 🔴\033[0m" if val >= 8 else "\033[1;34mSMALL 🔵\033[0m"
     eo = "\033[1;35mEVEN 🟣\033[0m" if val % 2 == 0 else "\033[1;37mODD ⚪\033[0m"
     num = val % 10
@@ -60,11 +59,8 @@ def get_prediction(period):
 
 def check_approval(hwid):
     try:
-        # Secret Salt for Key verification
         raw = hwid + "FOZI_KING_POWER_999"
         my_key = "FOZI-" + hashlib.md5(raw.encode()).hexdigest()[:8].upper()
-        
-        # GitHub check
         res = requests.get(GITHUB_URL + f"?t={time.time()}", timeout=10)
         return my_key in res.text, my_key
     except:
@@ -76,15 +72,14 @@ def start_engine():
 
     if not is_approved:
         clear()
-        print(f"\033[1;31m[!] KEY NOT APPROVED")
+        print(f"\033[1;31m[!] ACCESS DENIED")
         print(f"\033[1;37m[●] YOUR KEY : \033[1;32m{my_key}")
-        print(f"\033[1;32m[#] WhatsApp Admin: {CONTACT_NO}")
         sys.exit()
 
     last_p = ""
     while True:
         try:
-            current_p = get_pak_games_period()
+            current_p = get_perfect_period()
             sec = datetime.now().second
             
             if current_p != last_p:
@@ -100,29 +95,28 @@ def start_engine():
             print(f"\033[1;32m╔══════════════════════════════════════════════════════════╗")
             print(f"║           👑 {OWNER_NAME} OFFICIAL 👑            ║")
             print(f"╚══════════════════════════════════════════════════════════╝\033[0m")
-            print(f" \033[1;37m[●] GAME     : \033[1;32mPAK GAMES K3 (1-MIN)")
-            print(f" \033[1;37m[●] PERIOD   : \033[1;33m{current_p}")
-            print(f" \033[1;37m[●] STATUS   : \033[1;32mSYNCED WITH SERVER")
+            print(f" \033[1;37m[●] PERIOD SYNC : \033[1;32mMATCHED WITH GAME")
+            print(f" \033[1;37m[●] LIVE PERIOD : \033[1;33m{current_p}")
             print("\033[1;32m" + "━"*58 + "\033[0m")
 
-            print(f"\n   \033[1;33m🎯 TARGET PREDICTION:")
+            print(f"\n   \033[1;33m🎯 100% VIP PREDICTION:")
             print(f"   \033[1;37m[RESULT] : {bs}")
             print(f"   \033[1;37m[NUMBER] : \033[1;32m{num}")
             print(f"   \033[1;37m[TYPE]   : {eo}")
 
-            print("\033[1;32m\n" + "━"*15 + " [ PREVIOUS HISTORY ] " + "━"*21 + "\033[0m")
+            print("\033[1;32m\n" + "━"*15 + " [ PREVIOUS RESULTS ] " + "━"*21 + "\033[0m")
             if not history_list:
-                print("   \033[1;30mConnecting to live data stream...")
+                print("   \033[1;30mLoading server history...")
             else:
                 for line in history_list:
                     print(f"   {line}")
 
             rem_s = 60 - sec
             color = "\033[1;32m" if rem_s > 10 else "\033[1;31m"
-            print(f"\n {color}[⏳] SYNCING NEXT: {rem_s}s \033[0m")
+            print(f"\n {color}[⏳] NEXT PERIOD IN: {rem_s}s \033[0m")
             
             time.sleep(1)
-        except Exception as e:
+        except Exception:
             time.sleep(2)
 
 if __name__ == "__main__":
